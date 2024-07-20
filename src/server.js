@@ -1,9 +1,15 @@
 const express = require("express");
 const app = express()
-const port = 3000
+const cors = require("cors");
+const morgan = require("morgan");
+const PORT = 3000
 
 //importing userRoutes
-const userRoutes = require(".routes/userRoutes");
+const userRoutes = require("../routes/userRoutes");
+
+app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend -- You are currently at the / route");
