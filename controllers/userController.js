@@ -23,7 +23,20 @@ const register = async (req, res) => {
 }
 
 //login user
+// make sure user exists, and password they entered is correct
+const login = async (req, res) => {
+    const {name, username, password, address} = req.body;
+    const user = await findUserByUsername(username);
+    if (user && (await bcrypt.compare(password, user.password))) {
+        // creating a JSON webtoken
+        const token = jwt.sign({userId: user.user_id, userName: user.username}, "SECRET KEY");
+        res.status(200).json({token})
+    } else {
+        res.status(401).json({error: "Invalid Credentials"})
+    }
+}
 
 module.exports = {
-    register
+    register,
+    login
 } 
