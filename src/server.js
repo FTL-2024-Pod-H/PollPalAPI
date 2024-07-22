@@ -3,6 +3,7 @@ const app = express()
 const cors = require("cors");
 const morgan = require("morgan");
 const PORT = 3000
+require('dotenv').config();
 
 //importing userRoutes
 const userRoutes = require("../routes/userRoutes");
