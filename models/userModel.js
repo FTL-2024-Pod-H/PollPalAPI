@@ -2,9 +2,9 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // function to Register user -- (create prisma)
-const createUser = async (username, password) => { //maybe need to add name, address
+const createUser = async (name, username, password, address) => { //maybe need to add name, address
     return await prisma.user.create({
-        data: {username, password} //maybe need to add name, address
+        data: {name, address, username, password} //maybe need to add name, address
     })
 }
 
@@ -12,7 +12,7 @@ const createUser = async (username, password) => { //maybe need to add name, add
 // find user by id/username
 const findUserByUsername = async (username) => {
     return await prisma.user.findUnique({
-        where: {username}
+        where: { username }
     })
 }
 
