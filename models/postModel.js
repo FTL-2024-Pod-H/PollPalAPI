@@ -39,9 +39,21 @@ const createPost = async( userContent) => {
     });
 };
 
+// const deletePost = async (post_id) => {
+//     return prisma.post.delete({
+//         where: {post_id: parseInt(post_id)}
+//     });
+// };
+
 const deletePost = async (post_id) => {
+    // Delete associated likes first
+    await prisma.likedPost.deleteMany({
+        where: { post_id: parseInt(post_id) }
+    });
+    
+    // Then delete the post
     return prisma.post.delete({
-        where: {post_id: parseInt(post_id)}
+        where: { post_id: parseInt(post_id) }
     });
 };
 
