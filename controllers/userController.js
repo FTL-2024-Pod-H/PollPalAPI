@@ -30,7 +30,7 @@ const login = async (req, res) => {
     const user = await findUserByUsername(username);
     if (user && (await bcrypt.compare(password, user.password))) {
         // creating a JSON webtoken
-        const token = jwt.sign({userId: user.user_id, userName: user.username}, "SECRET KEY");
+        const token = jwt.sign({userId: user.user_id, userName: user.username, fullName: user.name}, "SECRET KEY");
         res.status(200).json({token})
     } else {
         res.status(401).json({error: "Invalid Credentials"})
