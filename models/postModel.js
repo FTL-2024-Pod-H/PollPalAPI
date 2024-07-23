@@ -2,21 +2,7 @@ const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
 
-// const getAllPosts = async () => {
-//     return prisma.post.findMany({
-//         orderBy: {
-//             createdAt: 'desc'
-//         },
-//         include: {
-//             author: true,
-//             likes: true
-//         }
-        
-//     });
-// };
-
-const getAllPosts = async (page, limit) => {
-    const skip = (page - 1) * limit;
+const getAllPosts = async () => {
     return prisma.post.findMany({
         orderBy: {
             createdAt: 'desc'
@@ -24,11 +10,11 @@ const getAllPosts = async (page, limit) => {
         include: {
             author: true,
             likes: true
-        },
-        skip: skip,
-        take: limit
+        }
+        
     });
 };
+
 
 const getPostById = async (post_id) => {
     return prisma.post.findUnique({
@@ -37,7 +23,6 @@ const getPostById = async (post_id) => {
             author: true, 
             likes: true 
         }
-        // include: {author: true }
     });
 };
 
@@ -55,11 +40,6 @@ const createPost = async( userContent) => {
     });
 };
 
-// const deletePost = async (post_id) => {
-//     return prisma.post.delete({
-//         where: {post_id: parseInt(post_id)}
-//     });
-// };
 
 const deletePost = async (post_id) => {
     // Delete associated likes first
