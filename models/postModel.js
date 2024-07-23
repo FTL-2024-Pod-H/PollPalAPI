@@ -1,7 +1,22 @@
 const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const getAllPosts = async () => {
+
+// const getAllPosts = async () => {
+//     return prisma.post.findMany({
+//         orderBy: {
+//             createdAt: 'desc'
+//         },
+//         include: {
+//             author: true,
+//             likes: true
+//         }
+        
+//     });
+// };
+
+const getAllPosts = async (page, limit) => {
+    const skip = (page - 1) * limit;
     return prisma.post.findMany({
         orderBy: {
             createdAt: 'desc'
@@ -9,8 +24,9 @@ const getAllPosts = async () => {
         include: {
             author: true,
             likes: true
-        }
-        
+        },
+        skip: skip,
+        take: limit
     });
 };
 
@@ -83,6 +99,8 @@ const checkIfLiked = async (post_id, user_id) => {
     });
     return !!result; // returns true if a like exists, false otherwise
 };
+
+
 
 module.exports = {
     getAllPosts,
