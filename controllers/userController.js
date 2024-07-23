@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { createUser, findUserByUsername, findUserById} = require("../models/userModel")
+const { createUser, findUserByUsername, findUserById} = require("../models/userModel");
+const userModel = require("../models/userModel");
 
 
 //Register user -- hashing for password
@@ -36,7 +37,17 @@ const login = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch users" });
+    }
+};
+
 module.exports = {
     register,
-    login
+    login,
+    getAllUsers
 } 
