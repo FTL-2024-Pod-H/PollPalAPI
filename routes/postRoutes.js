@@ -11,4 +11,7 @@ router.delete("/:post_id", postController.deletePost);
 router.post('/:post_id/like', postController.likePost);
 router.post('/:post_id/unlike', postController.unlikePost);
 
+router.get('/:post_id/liked-by/:user_id', postController.checkIfLiked);
+
+
 module.exports = router;

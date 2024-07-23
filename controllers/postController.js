@@ -47,8 +47,18 @@ const deletePost = async (req, res) => {
 
 // LIKE 
 
+// const likePost = async (req, res) => {
+//     const { user_id, post_id } = req.body;
+//     try {
+//         const likedPost = await postModel.likePost(user_id, post_id);
+//         res.status(200).json(likedPost);
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// };
 const likePost = async (req, res) => {
-    const { user_id, post_id } = req.body;
+    const { user_id } = req.body;
+    const post_id = parseInt(req.params.post_id);
     try {
         const likedPost = await postModel.likePost(user_id, post_id);
         res.status(200).json(likedPost);
@@ -57,11 +67,23 @@ const likePost = async (req, res) => {
     }
 };
 
+// 
 const unlikePost = async (req, res) => {
-    const { user_id, post_id } = req.body;
+    const { user_id } = req.body;
+    const post_id = parseInt(req.params.post_id);
     try {
         const unlikedPost = await postModel.unlikePost(user_id, post_id);
         res.status(200).json(unlikedPost);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+const checkIfLiked = async (req, res) => {
+    const { post_id, user_id } = req.params;
+    try {
+        const isLiked = await postModel.checkIfLiked(post_id, user_id);
+        res.status(200).json({ isLiked });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -73,5 +95,6 @@ module.exports = {
     createPost,
     deletePost,
     likePost,
-    unlikePost
+    unlikePost,
+    checkIfLiked
 };

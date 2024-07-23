@@ -17,6 +17,10 @@ const getAllPosts = async () => {
 const getPostById = async (post_id) => {
     return prisma.post.findUnique({
         where: {post_id: parseInt(post_id)},
+        include: { 
+            author: true, 
+            likes: true 
+        }
         // include: {author: true }
     });
 };
@@ -70,11 +74,22 @@ const unlikePost = async (user_id, post_id) => {
     });
 };
 
+const checkIfLiked = async (post_id, user_id) => {
+    const result = await prisma.likedPost.findFirst({
+        where: {
+            post_id: parseInt(post_id),
+            user_id: parseInt(user_id)
+        }
+    });
+    return !!result; // returns true if a like exists, false otherwise
+};
+
 module.exports = {
     getAllPosts,
     getPostById,
     createPost,
     deletePost,
     likePost,
-    unlikePost
+    unlikePost,
+    checkIfLiked
 };
