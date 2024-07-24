@@ -41,3 +41,12 @@ model LikedPost{
 
   @@id([user_id, post_id])
 }
+
+
+model Chat {
+  id             Int      @id @default(autoincrement())
+  conversationId String
+  prompt         String
+  response       String
+  createdAt      DateTime @default(now())
+}
