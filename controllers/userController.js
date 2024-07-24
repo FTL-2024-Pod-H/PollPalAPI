@@ -12,7 +12,7 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         console.log("hashedPassword", hashedPassword)
         // user model to be saved using the hashedpassword
-        const user = await createUser(name, username, hashedPassword, username)
+        const user = await createUser(name, username, hashedPassword, address)
         console.log("user", user)
         //201 -- successful recreation
         res.status(201).json(user)
