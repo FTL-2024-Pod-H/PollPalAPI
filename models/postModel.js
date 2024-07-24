@@ -2,17 +2,35 @@ const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
 
-const getAllPosts = async () => {
-    return prisma.post.findMany({
-        orderBy: {
-            createdAt: 'desc'
-        },
-        include: {
-            author: true,
-            likes: true
-        }
+// const getAllPosts = async () => {
+//     return prisma.post.findMany({
+//         orderBy: {
+//             createdAt: 'desc'
+//         },
+//         include: {
+//             author: true,
+//             likes: true
+//         }
         
-    });
+//     });
+// };
+const getAllPosts = async (page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    const [posts, totalPosts] = await Promise.all([
+        prisma.post.findMany({
+            skip: offset,
+            take: limit,
+            orderBy: {
+                createdAt: 'desc'
+            },
+            include: {
+                author: true,
+                likes: true
+            }
+        }),
+        prisma.post.count()
+    ]);
+    return { posts, totalPosts };
 };
 
 

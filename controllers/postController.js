@@ -1,13 +1,23 @@
 const postModel = require("../models/postModel");
 
+// const getAllPosts = async(req, res) => {
+//     try{
+//         const post = await postModel.getAllPosts();
+//         res.status(200).json(post);
+//     }catch (error){
+//         res.status(400).json({error: error.message})
+//     }
+// };
 const getAllPosts = async(req, res) => {
-    try{
-        const post = await postModel.getAllPosts();
-        res.status(200).json(post);
-    }catch (error){
-        res.status(400).json({error: error.message})
+    const { page = 1, limit = 10 } = req.query; // Get page and limit from query params
+    try {
+        const { posts, totalPosts } = await postModel.getAllPosts(Number(page), Number(limit));
+        res.status(200).json({ posts, totalPosts });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 };
+
 
 const getPostsById = async (req, res) => {
     try{
