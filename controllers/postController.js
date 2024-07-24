@@ -1,15 +1,7 @@
 const postModel = require("../models/postModel");
 
-// const getAllPosts = async(req, res) => {
-//     try{
-//         const post = await postModel.getAllPosts();
-//         res.status(200).json(post);
-//     }catch (error){
-//         res.status(400).json({error: error.message})
-//     }
-// };
 const getAllPosts = async(req, res) => {
-    const { page = 1, limit = 10 } = req.query; // Get page and limit from query params
+    const { page = 1, limit = 10 } = req.query; 
     try {
         const { posts, totalPosts } = await postModel.getAllPosts(Number(page), Number(limit));
         res.status(200).json({ posts, totalPosts });
@@ -55,17 +47,6 @@ const deletePost = async (req, res) => {
     }
 };
 
-// LIKE 
-
-// const likePost = async (req, res) => {
-//     const { user_id, post_id } = req.body;
-//     try {
-//         const likedPost = await postModel.likePost(user_id, post_id);
-//         res.status(200).json(likedPost);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
 const likePost = async (req, res) => {
     const { user_id } = req.body;
     const post_id = parseInt(req.params.post_id);
@@ -77,7 +58,7 @@ const likePost = async (req, res) => {
     }
 };
 
-// 
+
 const unlikePost = async (req, res) => {
     const { user_id } = req.body;
     const post_id = parseInt(req.params.post_id);

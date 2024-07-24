@@ -1,19 +1,6 @@
 const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 
-
-// const getAllPosts = async () => {
-//     return prisma.post.findMany({
-//         orderBy: {
-//             createdAt: 'desc'
-//         },
-//         include: {
-//             author: true,
-//             likes: true
-//         }
-        
-//     });
-// };
 const getAllPosts = async (page = 1, limit = 10) => {
     const offset = (page - 1) * limit;
     const [posts, totalPosts] = await Promise.all([
@@ -71,7 +58,7 @@ const deletePost = async (post_id) => {
     });
 };
 
-
+// ADD AND EDIT POST (UPDATE)
 
 // const updatePost = async(post_id, content) => {
 //     return prisma.post.update({
@@ -107,7 +94,7 @@ const checkIfLiked = async (post_id, user_id) => {
             user_id: parseInt(user_id)
         }
     });
-    return !!result; // returns true if a like exists, false otherwise
+    return !!result; 
 };
 
 
