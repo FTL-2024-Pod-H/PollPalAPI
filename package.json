@@ -9,7 +9,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "google-auth-library": "^9.11.0",
+    "googleapis": "^140.0.1",
     "jsonwebtoken": "^9.0.2",
+    "localtunnel": "^2.0.2",
     "morgan": "^1.10.0"
   },
   "name": "pollpalapi",
