@@ -9,7 +9,9 @@ const PORT = 3000
 //importing userRoutes
 const userRoutes = require("../routes/userRoutes");
 const chatRoutes = require("../routes/chatRoutes");
+const postRoutes = require("../routes/postRoutes");
 const {rateLimiter} = require("../utlis/security");
+
 
 app.use(express.json());
 app.use(cors());
@@ -18,14 +20,15 @@ app.use(rateLimiter);
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend -- You are currently at the / route");
-})
+});
 
 app.use("/chat", chatRoutes);
 
 //user routes
-app.use("/users", userRoutes)
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
-  })
+});
