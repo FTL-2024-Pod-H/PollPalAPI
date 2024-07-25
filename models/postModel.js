@@ -58,6 +58,21 @@ const deletePost = async (post_id) => {
     });
 };
 
+const getUserPosts = async (userId, page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    const [posts, totalPosts] = await Promise.all([
+        prisma.post.findMany({
+            where: { author_id: parseInt(userId) },
+            skip: offset,
+            take: limit,
+            orderBy: { createdAt: 'desc' },
+            include: { author: true, likes: true }
+        }),
+        prisma.post.count({ where: { author_id: parseInt(userId) } })
+    ]);
+    return { posts, totalPosts };
+};
+
 // ADD AND EDIT POST (UPDATE)
 
 // const updatePost = async(post_id, content) => {
@@ -106,5 +121,6 @@ module.exports = {
     deletePost,
     likePost,
     unlikePost,
-    checkIfLiked
+    checkIfLiked,
+    getUserPosts
 };

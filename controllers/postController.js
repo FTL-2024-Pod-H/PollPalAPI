@@ -80,6 +80,17 @@ const checkIfLiked = async (req, res) => {
     }
 };
 
+const getUserPosts = async (req, res) => {
+    const { userId } = req.params;
+    const { page = 1, limit = 10 } = req.query;
+    try {
+        const { posts, totalPosts } = await postModel.getUserPosts(Number(userId), Number(page), Number(limit));
+        res.status(200).json({ posts, totalPosts });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 module.exports = {
     getAllPosts,
     getPostsById,
@@ -87,5 +98,6 @@ module.exports = {
     deletePost,
     likePost,
     unlikePost,
-    checkIfLiked
+    checkIfLiked,
+    getUserPosts
 };

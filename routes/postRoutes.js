@@ -14,4 +14,7 @@ router.post('/:post_id/unlike', postController.unlikePost);
 router.get('/:post_id/liked-by/:user_id', postController.checkIfLiked);
 
 
+router.get("/user/:userId", postController.getUserPosts);
+
+
 module.exports = router;
