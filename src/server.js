@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -10,10 +11,16 @@ const verifyToken = require("../middleware/auth");
 
 //importing userRoutes
 const userRoutes = require("../routes/userRoutes");
+const chatRoutes = require("../routes/chatRoutes");
+const postRoutes = require("../routes/postRoutes");
+const {rateLimiter} = require("../utlis/security");
+
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+// app.use(rateLimiter);
+app.use("/chat", rateLimiter, chatRoutes);
 
 // Use environment variables for OAuth credentials
 const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -67,9 +74,13 @@ app.get("/", (req, res) => {
   res.send("Hello from the backend -- You are currently at the / route");
 });
 
+app.use("/chat", chatRoutes);
+
 //user routes
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
+
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`)
 });

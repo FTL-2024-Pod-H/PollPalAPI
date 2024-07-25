@@ -23,8 +23,13 @@ const findUserById = async (id) => {
   });
 };
 
-module.exports = {
-  createUser,
-  findUserByUsername,
-  findUserById,
+const getAllUsers = async () => {
+    return await prisma.user.findMany();
 };
+
+module.exports = {
+    createUser,
+    findUserByUsername,
+    findUserById,
+    getAllUsers
+}

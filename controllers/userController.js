@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { createUser, findUserByUsername, findUserById} = require("../models/userModel")
+const { createUser, findUserByUsername, findUserById} = require("../models/userModel");
+const userModel = require("../models/userModel");
 
 
 //Register user -- hashing for password
@@ -12,7 +13,7 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         console.log("hashedPassword", hashedPassword)
         // user model to be saved using the hashedpassword
-        const user = await createUser(name, username, hashedPassword, username)
+        const user = await createUser(name, username, hashedPassword, address)
         console.log("user", user)
         //201 -- successful recreation
         res.status(201).json(user)
@@ -29,14 +30,24 @@ const login = async (req, res) => {
     const user = await findUserByUsername(username);
     if (user && (await bcrypt.compare(password, user.password))) {
         // creating a JSON webtoken
-        const token = jwt.sign({userId: user.user_id, userName: user.username}, process.env.SECRET_KEY); // setup env variable for secret key
+        const token = jwt.sign({userId: user.user_id, userName: user.username}, "SECRET KEY");
         res.status(200).json({token})
     } else {
         res.status(401).json({error: "Invalid Credentials"})
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch users" });
+    }
+};
+
 module.exports = {
     register,
-    login
+    login,
+    getAllUsers
 } 

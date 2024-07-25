@@ -14,10 +14,40 @@ datasource db {
 }
 
 model User {
-  user_id   Int @id @default(autoincrement())
+  user_id   Int     @id @default(autoincrement())
   name      String
   username  String  @unique
   password  String
   address   String
   google_id String @default("0")
+  posts     Post[]
+  likes     LikedPost[]
+}
+
+model Post{
+  post_id     Int         @id @default(autoincrement())
+  content     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  author      User        @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+  author_id   Int
+  likes       LikedPost[]
+}
+
+model LikedPost{
+  user        User @relation(fields: [user_id], references: [user_id])
+  user_id     Int
+  post        Post @relation(fields: [post_id], references: [post_id])
+  post_id     Int
+
+  @@id([user_id, post_id])
+}
+
+
+model Chat {
+  id             Int      @id @default(autoincrement())
+  conversationId String
+  prompt         String
+  response       String
+  createdAt      DateTime @default(now())
 }
