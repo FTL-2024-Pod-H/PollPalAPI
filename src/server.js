@@ -16,7 +16,8 @@ const {rateLimiter} = require("../utlis/security");
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
-app.use(rateLimiter);
+// app.use(rateLimiter);
+app.use("/chat", rateLimiter, chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello from the backend -- You are currently at the / route");
