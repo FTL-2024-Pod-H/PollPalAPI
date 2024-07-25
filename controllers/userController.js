@@ -46,6 +46,8 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+//update user by ID
+
 module.exports = {
     register,
     login,

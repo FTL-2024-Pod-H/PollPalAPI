@@ -27,6 +27,8 @@ const getAllUsers = async () => {
     return await prisma.user.findMany();
 };
 
+//update user by ID
+
 module.exports = {
     createUser,
     findUserByUsername,
