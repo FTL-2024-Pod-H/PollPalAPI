@@ -10,7 +10,7 @@ const PORT = 3000
 const userRoutes = require("../routes/userRoutes");
 const chatRoutes = require("../routes/chatRoutes");
 const postRoutes = require("../routes/postRoutes");
-// const {rateLimiter} = require("../utlis/security");
+const {rateLimiter} = require("../utlis/security");
 
 
 app.use(express.json());
