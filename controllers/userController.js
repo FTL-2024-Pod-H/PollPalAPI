@@ -13,7 +13,6 @@ const register = async (req, res) => {
             return res.status(400).json({error: "All fields are required"})
          }
 
-
         //hash password using brycpt and salt factor 10
         //salt -- number iterations the hashing algorithm will perform
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -33,8 +32,7 @@ const register = async (req, res) => {
         res.status(201).json({ message: "User successfully created", user})
 
     } catch (error){ 
-        // required filed missing
-        res.status(400).json({error: "User register error, maybe the user exists"})
+        res.status(400).json({error: "User register error"})
     }
 }
 
