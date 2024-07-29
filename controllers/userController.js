@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { createUser, findUserByUsername, findUserById} = require("../models/userModel");
+const { createUser, findUserByUsername, findUserById } = require("../models/userModel");
 const userModel = require("../models/userModel");
 
 
@@ -46,10 +46,24 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const updateUser = async(req, res) => {
+    try {
+        const updatedUser = await userModel.updateUser(req.params.id, req.body);
+        if (updatedUser) {
+            res.status(200).json(updatedUser)
+        } else {
+            res.status(404).json({error: "User not found"});
+        }
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 //update user by ID
 
 module.exports = {
     register,
     login,
-    getAllUsers
+    getAllUsers, 
+    updateUser
 } 

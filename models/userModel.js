@@ -27,11 +27,19 @@ const getAllUsers = async () => {
     return await prisma.user.findMany();
 };
 
+const updateUser = async (id, userData) => {
+  return prisma.user.update({
+    where: { user_id: parseInt(id) },
+    data: userData
+  });
+};
+
 //update user by ID
 
 module.exports = {
     createUser,
     findUserByUsername,
     findUserById,
-    getAllUsers
+    getAllUsers,
+    updateUser
 }
