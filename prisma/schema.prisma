@@ -21,6 +21,7 @@ model User {
   address   String
   posts     Post[]
   likes     LikedPost[]
+  replies   Reply[]
 }
 
 model Post{
@@ -31,6 +32,7 @@ model Post{
   author      User        @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
   author_id   Int
   likes       LikedPost[]
+  replies     Reply[]
 }
 
 model LikedPost{
@@ -49,4 +51,15 @@ model Chat {
   prompt         String
   response       String
   createdAt      DateTime @default(now())
+}
+
+model Reply{
+  reply_id       Int        @id @default(autoincrement())
+  content        String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  author         User       @relation(fields: [author_id], references: [user_id], onDelete: Cascade)
+  author_id      Int
+  post           Post       @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+  post_id        Int
 }

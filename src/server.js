@@ -4,12 +4,13 @@ const app = express()
 const cors = require("cors");
 const morgan = require("morgan");
 require("dotenv").config();
-const PORT = 5432
+const PORT = 3000
 
 //importing userRoutes
 const userRoutes = require("../routes/userRoutes");
 const chatRoutes = require("../routes/chatRoutes");
 const postRoutes = require("../routes/postRoutes");
+// const replyRoutes = require("../routes/replyRoutes");
 const {rateLimiter} = require("../utlis/security");
 
 
@@ -28,6 +29,8 @@ app.use("/chat", chatRoutes);
 //user routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
+// app.use("/replies", replyRoutes);
+
 
 
 app.listen(PORT, () => {

@@ -91,6 +91,38 @@ const getUserPosts = async (req, res) => {
     }
 };
 
+const createReply = async (req, res) => {
+    // const { content, author_id } = req.body;
+    // const { post_id } = req.params;
+
+    try {
+        const newReply = await postModel.createReply(req.params.post_id, req.body);
+        res.status(200).json(newReply);
+    } catch (error) {
+        console.error('Error creating reply:', error);
+        res.status(400).json({ error: error.message });
+    }
+};
+
+  const getRepliesByPostId = async (req, res) => {
+    // const { post_id } = req.params;
+    // console.log(`Fetching replies for post_id: ${post_id}`); 
+    try {
+        const replies = await postModel.getRepliesByPostId(req.params.post_id);
+        res.status(200).json(replies);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+//   const getAllReplies = async (req, res) => {
+//     try {
+//       const replies = await postModel.getAllReplies();
+//       res.status(200).json(replies);
+//     } catch (error) {
+//       res.status(400).json({ error: error.message });
+//     }
+//   };
+
 module.exports = {
     getAllPosts,
     getPostsById,
@@ -99,5 +131,8 @@ module.exports = {
     likePost,
     unlikePost,
     checkIfLiked,
-    getUserPosts
+    getUserPosts,
+    createReply,
+    getRepliesByPostId,
+    // getAllReplies
 };
