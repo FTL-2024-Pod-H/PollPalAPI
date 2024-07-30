@@ -6,14 +6,14 @@ const userModel = require("../models/userModel");
 
 //Register user -- hashing for password
 const register = async (req, res) => {
-    const {name, username, password, address} = req.body //maybe need to add name, address
+    const {email, name, username, password} = req.body //maybe need to add name, address
     try {
         //hash password using brycpt and salt factor 10
         //salt -- number iterations the hashing algorithm will perform
         const hashedPassword = await bcrypt.hash(password, 10)
         console.log("hashedPassword", hashedPassword)
         // user model to be saved using the hashedpassword
-        const user = await createUser(name, username, hashedPassword, address)
+        const user = await createUser(email, name, username, hashedPassword)
         console.log("user", user)
         //201 -- successful recreation
         res.status(201).json(user)
@@ -26,7 +26,7 @@ const register = async (req, res) => {
 //login user
 // make sure user exists, and password they entered is correct
 const login = async (req, res) => {
-    const {name, username, password, address} = req.body;
+    const {email, name, username, password} = req.body;
     const user = await findUserByUsername(username);
     if (user && (await bcrypt.compare(password, user.password))) {
         // creating a JSON webtoken

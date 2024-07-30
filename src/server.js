@@ -4,7 +4,7 @@ const app = express()
 const cors = require("cors");
 const morgan = require("morgan");
 require("dotenv").config();
-const PORT = 5432
+const PORT = 3000
 
 //importing userRoutes
 const userRoutes = require("../routes/userRoutes");
@@ -31,5 +31,5 @@ app.use("/posts", postRoutes);
 
 
 app.listen(PORT, () => {
-    console.log(`Server is running on https://pollpalapi.onrender.com`)
+    console.log(`Server is running on ${PORT}`)
 });

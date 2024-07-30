@@ -15,10 +15,10 @@ datasource db {
 
 model User {
   user_id   Int     @id @default(autoincrement())
+  email     String  @default("")
   name      String
   username  String  @unique
   password  String
-  address   String
   posts     Post[]
   likes     LikedPost[]
 }
