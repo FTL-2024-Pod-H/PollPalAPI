@@ -123,6 +123,16 @@ const createReply = async (req, res) => {
 //     }
 //   };
 
+// const deleteReply = async (req, res) => {
+//     try {
+//         const { post_id, reply_id } = req.params;
+//         const deletedReply = await postModel.deleteReply(post_id, reply_id);
+//         res.status(200).json({ message: "Reply deleted successfully", deletedReply });
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// };
+
 module.exports = {
     getAllPosts,
     getPostsById,

@@ -133,7 +133,7 @@ const createReply = async (post_id,userContent) => {
     return prisma.reply.create({
         data: {
             content: userContent.content,
-            author: { connect: { user_id: author_id } },
+            author: { connect: { user_id: userContent.author_id } },
             post: { connect: { post_id: post_id } },
         },
         include: {
@@ -158,6 +158,21 @@ const getRepliesByPostId = async (post_id) => {
 //   const getAllReplies = async () => {
 //     return prisma.reply.findMany();
 //   };
+
+// const deleteReply = async (post_id, reply_id) => {
+//     // Check if the reply belongs to the specified post
+//     const reply = await prisma.reply.findUnique({
+//         where: { reply_id: parseInt(reply_id) }
+//     });
+
+//     if (reply && reply.post_id === parseInt(post_id)) {
+//         return prisma.reply.delete({
+//             where: { reply_id: parseInt(reply_id) }
+//         });
+//     } else {
+//         throw new Error('Reply not found or does not belong to the specified post');
+//     }
+// };
 
 
 module.exports = {
