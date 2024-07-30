@@ -94,9 +94,10 @@ const getUserPosts = async (req, res) => {
 const createReply = async (req, res) => {
     // const { content, author_id } = req.body;
     // const { post_id } = req.params;
+    const post_id = parseInt(req.params.post_id);
 
     try {
-        const newReply = await postModel.createReply(req.params.post_id, req.body);
+        const newReply = await postModel.createReply(post_id, req.body);
         res.status(200).json(newReply);
     } catch (error) {
         console.error('Error creating reply:', error);
