@@ -8,18 +8,31 @@ const userModel = require("../models/userModel");
 const register = async (req, res) => {
     const {name, username, password, address} = req.body //maybe need to add name, address
     try {
+        // check if all required fields are provided
+         if (!name || !username || !password || !address ) {
+            return res.status(400).json({error: "All fields are required"})
+         }
+
         //hash password using brycpt and salt factor 10
         //salt -- number iterations the hashing algorithm will perform
         const hashedPassword = await bcrypt.hash(password, 10)
         console.log("hashedPassword", hashedPassword)
+
+        // check if the user already exists
+        const existingUser = await findUserByUsername(username);
+            if (existingUser) {
+                return res.status(400).json({error: "Username already exists"})
+            }
+
+
         // user model to be saved using the hashedpassword
         const user = await createUser(name, username, hashedPassword, address)
         console.log("user", user)
         //201 -- successful recreation
-        res.status(201).json(user)
+        res.status(201).json({ message: "User successfully created", user})
 
-    } catch (error){
-        res.status(400).json({ error: "User register error, maybe the user exists" });
+    } catch (error){ 
+        res.status(400).json({error: "User register error"})
     }
 }
 
