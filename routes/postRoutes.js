@@ -18,9 +18,8 @@ router.get("/user/:userId", postController.getUserPosts);
 
 router.post('/:post_id/replies', postController.createReply);
 router.get('/:post_id/replies', postController.getRepliesByPostId);
+router.delete('/:post_id/replies/:reply_id', postController.deleteReply);
 
-// router.delete('/:post_id/replies/:reply_id', postController.deleteReply);
-// router.get('/replies', postController.getAllReplies);
 
 
 module.exports = router;

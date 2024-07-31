@@ -63,12 +63,16 @@ const createPost = async( userContent) => {
 
 
 const deletePost = async (post_id) => {
-    // Delete associated likes first
+    // Delete associated likes
     await prisma.likedPost.deleteMany({
         where: { post_id: parseInt(post_id) }
     });
-    
-    // Then delete the post
+
+    await prisma.reply.deleteMany({
+        where: { post_id: parseInt(post_id) }
+    });
+
+    // delete post
     return prisma.post.delete({
         where: { post_id: parseInt(post_id) }
     });
@@ -88,15 +92,6 @@ const getUserPosts = async (userId, page = 1, limit = 10) => {
     ]);
     return { posts, totalPosts };
 };
-
-// ADD AND EDIT POST (UPDATE)
-
-// const updatePost = async(post_id, content) => {
-//     return prisma.post.update({
-//         where: {post_id: parseInt(post_id)},
-//         data: content
-//     });
-// }
 
 const likePost = async (user_id, post_id) => {
     return prisma.likedPost.create({
@@ -129,7 +124,6 @@ const checkIfLiked = async (post_id, user_id) => {
 };
 
 const createReply = async (post_id,userContent) => {
-    // const { content, author_id, post_id } = userContent;
     return prisma.reply.create({
         data: {
             content: userContent.content,
@@ -155,24 +149,15 @@ const getRepliesByPostId = async (post_id) => {
         },
     });
 };
-//   const getAllReplies = async () => {
-//     return prisma.reply.findMany();
-//   };
 
-// const deleteReply = async (post_id, reply_id) => {
-//     // Check if the reply belongs to the specified post
-//     const reply = await prisma.reply.findUnique({
-//         where: { reply_id: parseInt(reply_id) }
-//     });
+const deleteReply = async (post_id, reply_id) => {
+    return prisma.reply.delete({
+        where: {
+            reply_id: parseInt(reply_id),
+        },
+    });
+};
 
-//     if (reply && reply.post_id === parseInt(post_id)) {
-//         return prisma.reply.delete({
-//             where: { reply_id: parseInt(reply_id) }
-//         });
-//     } else {
-//         throw new Error('Reply not found or does not belong to the specified post');
-//     }
-// };
 
 
 module.exports = {
@@ -186,5 +171,5 @@ module.exports = {
     getUserPosts,
     createReply,
     getRepliesByPostId,
-    // getAllReplies
+    deleteReply
 };

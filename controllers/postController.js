@@ -10,7 +10,6 @@ const getAllPosts = async(req, res) => {
     }
 };
 
-
 const getPostsById = async (req, res) => {
     try{
         const post = await postModel.getPostById(req.params.post_id);
@@ -92,10 +91,7 @@ const getUserPosts = async (req, res) => {
 };
 
 const createReply = async (req, res) => {
-    // const { content, author_id } = req.body;
-    // const { post_id } = req.params;
     const post_id = parseInt(req.params.post_id);
-
     try {
         const newReply = await postModel.createReply(post_id, req.body);
         res.status(200).json(newReply);
@@ -106,33 +102,29 @@ const createReply = async (req, res) => {
 };
 
   const getRepliesByPostId = async (req, res) => {
-    // const { post_id } = req.params;
-    // console.log(`Fetching replies for post_id: ${post_id}`); 
+    const post_id = parseInt(req.params.post_id);
     try {
-        const replies = await postModel.getRepliesByPostId(req.params.post_id);
+        const replies = await postModel.getRepliesByPostId(post_id);
         res.status(200).json(replies);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 };
-//   const getAllReplies = async (req, res) => {
-//     try {
-//       const replies = await postModel.getAllReplies();
-//       res.status(200).json(replies);
-//     } catch (error) {
-//       res.status(400).json({ error: error.message });
-//     }
-//   };
 
-// const deleteReply = async (req, res) => {
-//     try {
-//         const { post_id, reply_id } = req.params;
-//         const deletedReply = await postModel.deleteReply(post_id, reply_id);
-//         res.status(200).json({ message: "Reply deleted successfully", deletedReply });
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
+const deleteReply = async (req, res) => {
+    const post_id = parseInt(req.params.post_id);
+    const reply_id = parseInt(req.params.reply_id);
+    try {
+        const deletedReply = await postModel.deleteReply(post_id, reply_id);
+        if (deletedReply) {
+            res.status(200).json(deletedReply);
+        } else {
+            res.status(400).json({ error: "Reply not found" });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
 module.exports = {
     getAllPosts,
@@ -145,5 +137,5 @@ module.exports = {
     getUserPosts,
     createReply,
     getRepliesByPostId,
-    // getAllReplies
+    deleteReply
 };
