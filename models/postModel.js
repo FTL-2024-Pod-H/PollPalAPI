@@ -145,7 +145,7 @@ const getRepliesByPostId = async (post_id) => {
             post: true
         },
         orderBy: {
-            createdAt: 'asc',
+            createdAt: 'dec',
         },
     });
 };
