@@ -15,7 +15,7 @@ const chatHandler = async (req, res) => {
 
     try{
         let messages = [
-            {role: "system", content: "You are an AI assistant specialized in the US electoral system. Provide accurate and up-to-date information about the election process, government positions, the electoral college, and other relevant topics. If you don't have updated or accurate information, inform the user instead of trying to find a response to a prompt you don't know the answer to."},
+            {role: "system", content: "You are an AI assistant specialized in the US electoral system. Provide accurate and up-to-date information about the election process, government positions, the electoral college, and other relevant topics. If you don't have up to date or accurate information, inform the user instead of trying to find a response to a prompt you don't know the answer to."},
         ];
         if (conversationId) {
             const previousMessages = await getChatHistory(conversationId);
@@ -29,7 +29,7 @@ const chatHandler = async (req, res) => {
         messages.push({role: "user", content: prompt});
 
         const completion = await openai.chat.completions.create({
-            model:"gpt-3.5-turbo",
+            model:"gpt-4o-mini",
             messages: messages,
         })
 
