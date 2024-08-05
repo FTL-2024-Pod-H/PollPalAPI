@@ -22,7 +22,7 @@ const getAllPosts = async (page = 1, limit = 10) => {
         }),
         prisma.post.count()
     ]);
-    console.log("Fetched posts with replies:", posts);
+    // console.log("Fetched posts with replies:", posts);
     return { posts, totalPosts };
 };
 
