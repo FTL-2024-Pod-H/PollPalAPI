@@ -16,7 +16,7 @@ const register = async (req, res) => {
         //hash password using brycpt and salt factor 10
         //salt -- number iterations the hashing algorithm will perform
         const hashedPassword = await bcrypt.hash(password, 10)
-        console.log("hashedPassword", hashedPassword)
+        // console.log("hashedPassword", hashedPassword)
 
         // check if the user already exists
         const existingUser = await findUserByUsername(username);
@@ -27,7 +27,7 @@ const register = async (req, res) => {
 
         // user model to be saved using the hashedpassword
         const user = await createUser(name, username, hashedPassword, address)
-        console.log("user", user)
+        // console.log("user", user)
         //201 -- successful recreation
         res.status(201).json({ message: "User successfully created", user})
 

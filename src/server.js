@@ -34,5 +34,5 @@ app.use("/posts", postRoutes);
 
 
 app.listen(PORT, () => {
-    console.log(`Server is running on https://pollpalapi.onrender.com`)
+    // console.log(`Server is running on https://pollpalapi.onrender.com`)
 });
