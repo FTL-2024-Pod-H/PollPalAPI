@@ -1,1 +1,1 @@
-# PollPalAPI
+# PollPal Backend Repository
